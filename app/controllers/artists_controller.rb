@@ -8,8 +8,15 @@ class ArtistsController < ApplicationController
   end
 
   def new
-    @artist = Artist.new
+    if Preference.last.allow_create_artists
+     @artist = Artist.new
+    else
+      redirect_to artists_path
+    end
+    # if there is an :id in the route then it needs an argument
   end
+
+
 
   def create
     @artist = Artist.new(artist_params)
